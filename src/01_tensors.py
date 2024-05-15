@@ -1,20 +1,10 @@
 # %% imports
+from .utils import inspect, show_grad_funs
 import torch
 
 # ignore warnings just to show some possible errors in torch without the console reporting it
 import warnings
 warnings.filterwarnings("ignore")
-
-
-# %% functions to display information about tensors
-def inspect(x: torch.tensor, name: str = ''):
-    print(f'tensor {name} data: {x.data} grad: {x.grad if x.requires_grad else None} requires_grad: {x.requires_grad}')
-
-
-def show_grad_funs(xs: list[torch.tensor], names: list[str]):
-    for x, name in zip(xs, names):
-        print(f'{name}: {x.data} grad_fn: {x.grad_fn}')
-    print()
 
 
 # %% define tensors and their initial values similarly to the presentation
