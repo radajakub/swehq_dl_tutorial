@@ -79,6 +79,11 @@ def evaluate(net, loader):
     return accuracy, total_loss
 
 
+# %% try to evaluate the pretrained network on the test set
+test_acc, _ = evaluate(net, test_loader)
+print(test_acc)
+
+
 # %% define a function for training the model
 def train(net, train_loader, val_loader, lr=0.1, epochs=50):
     train_losses = np.zeros(epochs)
@@ -142,7 +147,7 @@ train_losses, train_accs, val_losses, val_accs = train(full_net, train_loader, v
 plot_learning(train_losses, val_losses, train_accs, val_accs)
 
 # %%
-test_acc, _ = evaluate(full_net, torch.utils.data.DataLoader(test_data, batch_size=batch_size, num_workers=0))
+test_acc, _ = evaluate(full_net, test_loader)
 print(test_acc)
 
 # %% transfer-learning (learn only the new layer, freeze the remaining weights)
@@ -173,7 +178,7 @@ train_losses, train_accs, val_losses, val_accs = train(transfer_net, train_loade
 plot_learning(train_losses, val_losses, train_accs, val_accs)
 
 # %%
-test_acc, _ = evaluate(transfer_net, torch.utils.data.DataLoader(test_data, batch_size=batch_size, num_workers=0))
+test_acc, _ = evaluate(transfer_net, test_loader)
 print(test_acc)
 
 # %% fine-tuning (learn all the weights but start from pre-trained)
@@ -199,5 +204,5 @@ train_losses, train_accs, val_losses, val_accs = train(fine_net, train_loader, v
 plot_learning(train_losses, val_losses, train_accs, val_accs)
 
 # %%
-test_acc, _ = evaluate(fine_net, torch.utils.data.DataLoader(test_data, batch_size=batch_size, num_workers=0))
+test_acc, _ = evaluate(fine_net, test_loader)
 print(test_acc)
